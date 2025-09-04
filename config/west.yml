@@ -1,0 +1,16 @@
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    - name: ggrocer
+      url-base: https://github.com/greengrocer98
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: main
+      import: app/west.yml
+    - name: zmk-vfx-indicator
+      remote: ggrocer
+      revision: main
+  self:
+    path: config

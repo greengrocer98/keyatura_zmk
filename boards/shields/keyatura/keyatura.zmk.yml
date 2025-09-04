@@ -1,0 +1,9 @@
+file_format: "1"
+id: keyatura
+name: keyatura
+type: shield
+url: https://github.com/greengrocer98/keyatura
+requires: [pro_micro]
+features:
+  - keys
+  - studio
