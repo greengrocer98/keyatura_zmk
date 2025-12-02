@@ -13,9 +13,8 @@ build_mouse () {
     export NRF_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrf"
     export NRFXLIB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrfxlib"
     export ZMK_ESB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb"
-    export ZMK_RGBLED_WIDGET="$HOME/zmk-vfx-indicator"
-    export ZMK_PMW_3610_DRIVER="$HOME/zmk_modules/efogdev-zmk-pmw3610-driver"
-    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_PMW_3610_DRIVER};${ZMK_RGBLED_WIDGET}"
+    export ZMK_PAW_3395_DRIVER="$HOME/zmk_modules/zmk-paw3395-driver"
+    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_PAW_3395_DRIVER}"
     west build \
         -p -b nice_nano_v2 \
         -d "$CURRENT_DIR/build/$shield" -- \
@@ -33,8 +32,9 @@ build_dongle () {
     export NRF_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrf"
     export NRFXLIB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrfxlib"
     export ZMK_ESB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb"
-    export ZMK_RGBLED_WIDGET="$HOME/zmk-vfx-indicator"
-    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_RGBLED_WIDGET}"
+    # export ZMK_RGBLED_WIDGET="$HOME/zmk-vfx-indicator"
+    # export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_RGBLED_WIDGET}"
+    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS}"
     west build \
         -p -b nice_nano_v2 \
         -S studio-rpc-usb-uart \
@@ -42,8 +42,7 @@ build_dongle () {
         -d "$CURRENT_DIR/build/$shield" -- \
         -DZMK_CONFIG="$CURRENT_DIR" \
         -DSHIELD=keyatura_$shield \
-        -DZMK_EXTRA_MODULES="${ZMK_MODULE_DIRS}" \
-        -DCONFIG_ZMK_STUDIO=y
+        -DZMK_EXTRA_MODULES="${ZMK_MODULE_DIRS}"
 
     cp "$CURRENT_DIR/build/$shield/zephyr/zmk.uf2" "$CURRENT_DIR/build/$shield/$shield.uf2"
     cp "$CURRENT_DIR/build/$shield/zephyr/zmk.uf2" "$CURRENT_DIR/build/uf_files/$shield.uf2"
@@ -60,8 +59,8 @@ mkdir -p $CURRENT_DIR/build
 
 pushd $ZMK_APP_DIR
 
-# build_dongle
-build_mouse
+build_dongle
+# build_mouse
 
 deactivate
 

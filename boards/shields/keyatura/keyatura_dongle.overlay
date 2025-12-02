@@ -3,8 +3,46 @@
 #include "keyatura.dtsi"
 #include "keyatura_esb_addr.dtsi"
 #include <zephyr/dt-bindings/input/input-event-codes.h>
+// #include "leds.dtsi"
+
+&physical_layout0 {
+    transform = <&default_transform>;
+};
 
 / {
+
+    chosen {
+        zmk,kscan = &kscan1;
+        zmk,matrix_transform = &default_transform;
+        // zmk,physical-layout = &physical_layout0;
+        // zmk,backlight = &backlight;
+    }; 
+
+    kscan1: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "row2col";
+        wakeup-source;
+		row-gpios
+			= <&gpio0 9  GPIO_ACTIVE_HIGH>
+			, <&gpio0 10 GPIO_ACTIVE_HIGH>
+			, <&gpio1 11 GPIO_ACTIVE_HIGH>
+			, <&gpio1 13 GPIO_ACTIVE_HIGH>
+			, <&gpio1 6  GPIO_ACTIVE_HIGH>
+			, <&gpio1 4  GPIO_ACTIVE_HIGH>
+            , <&gpio0 11 GPIO_ACTIVE_HIGH>
+			, <&gpio1 0  GPIO_ACTIVE_HIGH>
+            ;
+
+        col-gpios
+		= <&gpio0 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        ;
+
+    };
+
     input_processors {
         zip_xy_swap_to_scroll_mapper: zip_xy_swap_to_scroll_mapper {
             compatible = "zmk,input-processor-code-mapper";
@@ -17,6 +55,8 @@
         };
     };
 };
+
+
 
 &mouse_listener {
     status = "okay";

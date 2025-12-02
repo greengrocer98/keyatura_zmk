@@ -3,11 +3,10 @@ id: keyatura
 name: keyatura
 type: shield
 url: https://github.com/greengrocer98/keyatura_pcb
-requires: [pro_micro]
 features:
   - keys
   - studio
   - pointer
 siblings:
   - keyatura_dongle
-  - keyatura_mouse
+  - lariska
