@@ -14,9 +14,12 @@
 #define INPUT_REL_HWHEEL 0x06           /**< Relative horizontal wheel coordinate */
 #define INPUT_REL_MISC 0x09             /**< Relative misc coordinate */
 
+#define KEYATURA_MOUSE
+
 / {
     chosen {
         zmk,kscan = &kscan2;
+        // zmk,physical-layout = &physical_layout0;
         zmk,matrix_transform = &default_transform;
     }; 
 
@@ -29,6 +32,7 @@
             , <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             , <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             , <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             ;
     };
 };
@@ -60,13 +64,13 @@
 
 &spi2 {
 	compatible = "nordic,nrf-spim";
-  status = "okay";
+    status = "okay";
 	pinctrl-0 = <&spi2_default>;
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
 	cs-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
 
-	pd0: pd@0 {
+	mou0: pd@0 {
 		compatible = "pixart,paw3395";
 	    status = "okay";
 		label = "MOU0";
@@ -86,11 +90,60 @@
 };
 
 &mouse_split {
-    device = <&pd0>;
+    device = <&mou0>;
 }; 
 
-&m_encoder {
+// &m_encoder {
+//     status = "okay";
+//     a-gpios = <&gpio0 1 (GPIO_ACTIVE_LOW)>;
+//     b-gpios = <&gpio0 0 (GPIO_ACTIVE_LOW)>;
+// };
+
+/ {
+    /delete-node/ m_encoder;
+};
+
+&pinctrl {
+    qdec_default: qdec_default {
+        group1 {
+            psels = <NRF_PSEL(QDEC_A, 0, 1)>,
+                    <NRF_PSEL(QDEC_B, 0, 0)>;
+            // bias-pull-up;
+        };
+    };
+
+
+// need second set of pins defined if deep sleep is enabled
+    qdec_sleep: qdec_sleep {
+        group1 {
+            psels = <NRF_PSEL(QDEC_A, 0, 1)>,
+                    <NRF_PSEL(QDEC_B, 0, 0)>;
+            // bias-pull-up; // TODO: find out if this makes sense with low-power-enable
+            low-power-enable;
+        };
+    };
+};
+
+  // Set up the QDEC hardware based driver and give it the same label as the deleted node.
+m_encoder: &qdec0 {
     status = "okay";
-    a-gpios = <&gpio0 0 (GPIO_ACTIVE_HIGH)>;
-    b-gpios = <&gpio0 1 (GPIO_ACTIVE_HIGH)>;
+    led-pre = <0>;
+    steps = <48>;
+    pinctrl-0 = <&qdec_default>;
+    pinctrl-1 = <&qdec_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+/{
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		#binding-cells = <1>;
+		values = < 400 800 1200 2400 3200 >;
+		attr = <0>;
+		sensor_device = <&mou0>;
+		display-name = "DPI cycle";
+        load_delay = <200>;
+        save_delay = <1000>;
+		persistant;
+	};
 };

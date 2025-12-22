@@ -2,11 +2,8 @@ file_format: "1"
 id: keyatura
 name: keyatura
 type: shield
-url: https://github.com/greengrocer98/keyatura_pcb
+url: https://github.com/greengrocer98/keyatura
 features:
   - keys
   - studio
   - pointer
-siblings:
-  - keyatura_dongle
-  - lariska

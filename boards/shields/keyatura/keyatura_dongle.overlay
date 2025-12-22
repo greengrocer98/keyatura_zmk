@@ -6,15 +6,15 @@
 // #include "leds.dtsi"
 
 &physical_layout0 {
-    transform = <&default_transform>;
+    kscan = <&kscan1>;
 };
 
 / {
 
     chosen {
         zmk,kscan = &kscan1;
-        zmk,matrix_transform = &default_transform;
-        // zmk,physical-layout = &physical_layout0;
+        // zmk,matrix_transform = &default_transform;
+        zmk,physical-layout = &physical_layout0;
         // zmk,backlight = &backlight;
     }; 
 
@@ -54,6 +54,11 @@
                 ;
         };
     };
+
+	sensors: sensors {
+		compatible = "zmk,keymap-sensors";
+		sensors = <&m_encoder>;
+	};
 };
 
 
@@ -62,12 +67,26 @@
     status = "okay";
 
     scroll-scaler {
-        layers = <1>;
+        layers = <2>;
         input-processors = <&zip_xy_scaler 1 2 &zip_xy_swap_to_scroll_mapper>;
     };
 
     sniper {
         layers = <1>;
-        input-processors = <&zip_xy_scaler 1 2>;
+        input-processors = <&zip_xy_scaler 1 4>;
     };
+};
+
+/{
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		#binding-cells = <1>;
+		values = < 400 800 1200 2400 3200 >;
+		attr = <0>;
+		sensor_device = <&mouse_split>;
+		display-name = "DPI cycle";
+        load_delay = <200>;
+        save_delay = <1000>;
+		persistant;
+	};
 };
