@@ -3,58 +3,58 @@
 #include "keyatura.dtsi"
 #include "keyatura_esb_addr.dtsi"
 #include <zephyr/dt-bindings/input/input-event-codes.h>
-// #include "leds.dtsi"
+#include "keyatura_leds.dtsi"
 
 &physical_layout0 {
-    kscan = <&kscan1>;
+	kscan = <&kscan1>;
 };
 
 / {
-
-    chosen {
-        zmk,kscan = &kscan1;
-        // zmk,matrix_transform = &default_transform;
-        zmk,physical-layout = &physical_layout0;
-        // zmk,backlight = &backlight;
-    }; 
-
-    kscan1: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
-        diode-direction = "row2col";
-        wakeup-source;
+	
+	chosen {
+		zmk,kscan = &kscan1;
+		// zmk,matrix_transform = &default_transform;
+		zmk,physical-layout = &physical_layout0;
+		zmk,backlight = &backlight;
+	};
+	
+	kscan1: kscan {
+		compatible = "zmk,kscan-gpio-matrix";
+		diode-direction = "row2col";
+		wakeup-source;
 		row-gpios
-			= <&gpio0 9  GPIO_ACTIVE_HIGH>
-			, <&gpio0 10 GPIO_ACTIVE_HIGH>
-			, <&gpio1 11 GPIO_ACTIVE_HIGH>
-			, <&gpio1 13 GPIO_ACTIVE_HIGH>
-			, <&gpio1 6  GPIO_ACTIVE_HIGH>
-			, <&gpio1 4  GPIO_ACTIVE_HIGH>
-            , <&gpio0 11 GPIO_ACTIVE_HIGH>
-			, <&gpio1 0  GPIO_ACTIVE_HIGH>
-            ;
-
-        col-gpios
+		= <&gpio0 9  GPIO_ACTIVE_HIGH>
+		, <&gpio0 10 GPIO_ACTIVE_HIGH>
+		, <&gpio1 11 GPIO_ACTIVE_HIGH>
+		, <&gpio1 13 GPIO_ACTIVE_HIGH>
+		, <&gpio1 6  GPIO_ACTIVE_HIGH>
+		, <&gpio1 4  GPIO_ACTIVE_HIGH>
+		, <&gpio0 11 GPIO_ACTIVE_HIGH>
+		, <&gpio1 0  GPIO_ACTIVE_HIGH>
+		;
+		
+		col-gpios
 		= <&gpio0 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 		, <&gpio0 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 		, <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 		, <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 		, <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        ;
-
-    };
-
-    input_processors {
-        zip_xy_swap_to_scroll_mapper: zip_xy_swap_to_scroll_mapper {
-            compatible = "zmk,input-processor-code-mapper";
-            #input-processor-cells = <0>;
-            type = <INPUT_EV_REL>;
-            map
-                = <INPUT_REL_Y INPUT_REL_HWHEEL>
-                , <INPUT_REL_X INPUT_REL_WHEEL>
-                ;
-        };
-    };
-
+		;
+		
+	};
+	
+	input_processors {
+		zip_xy_swap_to_scroll_mapper: zip_xy_swap_to_scroll_mapper {
+			compatible = "zmk,input-processor-code-mapper";
+			#input-processor-cells = <0>;
+			type = <INPUT_EV_REL>;
+			map
+			= <INPUT_REL_Y INPUT_REL_HWHEEL>
+			, <INPUT_REL_X INPUT_REL_WHEEL>
+			;
+		};
+	};
+	
 	sensors: sensors {
 		compatible = "zmk,keymap-sensors";
 		sensors = <&m_encoder>;
@@ -64,29 +64,29 @@
 
 
 &mouse_listener {
-    status = "okay";
-
-    scroll-scaler {
-        layers = <2>;
-        input-processors = <&zip_xy_scaler 1 2 &zip_xy_swap_to_scroll_mapper>;
-    };
-
-    sniper {
-        layers = <1>;
-        input-processors = <&zip_xy_scaler 1 4>;
-    };
-};
-
-/{
-	dpi_cycle: dpi_cycle {
-		compatible = "zmk,behavior-sensor-attr-cycle";
-		#binding-cells = <1>;
-		values = < 400 800 1200 2400 3200 >;
-		attr = <0>;
-		sensor_device = <&mouse_split>;
-		display-name = "DPI cycle";
-        load_delay = <200>;
-        save_delay = <1000>;
-		persistant;
+	status = "okay";
+	
+	scroll-scaler {
+		layers = <1>;
+		input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &zip_xy_scaler 1 5 &zip_xy_swap_to_scroll_mapper>;
+	};
+	
+	sniper {
+		layers = <2>;
+		input-processors = <&zip_xy_scaler 1 4>;
 	};
 };
+
+// /{
+// 	dpi_cycle: dpi_cycle {
+// 		compatible = "zmk,behavior-sensor-attr-cycle";
+// 		#binding-cells = <1>;
+// 		values = < 400 800 1200 2400 3200 >;
+// 		attr = <0>;
+// 		sensor_device = <&mouse_split>;
+// 		display-name = "DPI cycle";
+// 		load_delay = <200>;
+// 		save_delay = <1000>;
+// 		persistant;
+// 	};
+// };

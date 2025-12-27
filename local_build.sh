@@ -13,14 +13,14 @@ build_mouse () {
     export NRF_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrf"
     export NRFXLIB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrfxlib"
     export ZMK_ESB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb"
-    # export ZMK_PAW_3395_DRIVER="$HOME/zmk_modules/ggrocer-zmk-paw3395-driver"
-    export ZMK_BEHAVIOR_ATTR_CYCLE="$HOME/zmk_modules/zmk-behavior-sensor-attr-cycle"
-    export ZMK_PAW_3395_DRIVER="$HOME/zmk_modules/zmk-paw3395-driver"
-    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_BEHAVIOR_ATTR_CYCLE};${ZMK_PAW_3395_DRIVER}"
+    # export ZMK_BEHAVIOR_ATTR_CYCLE="$HOME/zmk_modules/zmk-behavior-sensor-attr-cycle"
+    export ZMK_PAW_3395_DRIVER="$HOME/zmk_modules/ggrocer-zmk-paw3395-driver"
+    # export ZMK_PAW_3395_DRIVER="$HOME/zmk_modules/zmk-paw3395-driver"
+    export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-vfx-rgbled-indicator"
+    # export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_BEHAVIOR_ATTR_CYCLE};${ZMK_PAW_3395_DRIVER};${ZMK_RGBLED_WIDGET}"
+    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_PAW_3395_DRIVER};${ZMK_RGBLED_WIDGET}"
     west build \
         -p -b nice_nano@2.0.0 \
-        -S zmk-usb-logging \
-        -S studio-rpc-usb-uart \
         -d "$CURRENT_DIR/build/$shield" -- \
         -DZMK_CONFIG="$CURRENT_DIR" \
         -DSHIELD=keyatura_$shield \
@@ -36,10 +36,8 @@ build_dongle () {
     export NRF_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrf"
     export NRFXLIB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb/nrfxlib"
     export ZMK_ESB_MODULE_DIRS="$HOME/zmk-esb/zmk-feature-split-esb"
-    export ZMK_BEHAVIOR_ATTR_CYCLE="$HOME/zmk_modules/zmk-behavior-sensor-attr-cycle"
-    # export ZMK_RGBLED_WIDGET="$HOME/zmk-vfx-indicator"
-    # export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_RGBLED_WIDGET}"
-    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_BEHAVIOR_ATTR_CYCLE}"
+    export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-vfx-rgbled-indicator"
+    export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_RGBLED_WIDGET}"
     west build \
         -p -b nice_nano@2.0.0 \
         -S studio-rpc-usb-uart \
@@ -67,7 +65,7 @@ export ZEPHYR_SDK_INSTALL_DIR="$HOME/zephyr-sdk-0.17.0"
 
 pushd $ZMK_APP_DIR
 
-build_dongle
+# build_dongle
 build_mouse
 
 deactivate
