@@ -17,7 +17,7 @@ build_mouse () {
     export ZMK_PMW_3610_DRIVER="$HOME/zmk_modules/efogdev-zmk-pmw3610-driver"
     export ZMK_MODULE_DIRS="${ZMK_ESB_MODULE_DIRS};${NRF_MODULE_DIRS};${NRFXLIB_MODULE_DIRS};${ZMK_PMW_3610_DRIVER};${ZMK_RGBLED_WIDGET}"
     west build \
-        -p -b nice_nano_v2 \
+        -p -b nice_nano \
         -d "$CURRENT_DIR/build/$side" -- \
         -DZMK_CONFIG="$CURRENT_DIR" \
         -DSHIELD=keyatura_$side \
@@ -34,9 +34,8 @@ build () {
     export ZMK_RGBLED_WIDGET="$HOME/zmk-vfx-indicator"
     export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET}"
     west build \
-        -p -b nice_nano_v2 \
+        -p -b nice_nano \
         -S studio-rpc-usb-uart \
-        -S zmk-usb-logging \
         -d "$CURRENT_DIR/build/$shield" -- \
         -DZMK_CONFIG="$CURRENT_DIR" \
         -DSHIELD=$shield \
@@ -50,7 +49,7 @@ build () {
 build_reset () {
     rm -rf $CURRENT_DIR/build/reset
     west build \
-        -p -b nice_nano_v2 \
+        -p -b nice_nano \
         -S studio-rpc-usb-uart \
         -d "$CURRENT_DIR/build/reset" -- \
         -DZMK_CONFIG="$CURRENT_DIR" \
@@ -67,6 +66,8 @@ ZMK_APP_DIR="$DEFAULTZMKAPPDIR/app"
 cd $DEFAULTZMKAPPDIR && source .venv/bin/activate && cd -
 
 mkdir -p $CURRENT_DIR/build
+export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+export ZEPHYR_SDK_INSTALL_DIR="$HOME/zephyr-sdk-0.17.0"
 
 pushd $ZMK_APP_DIR
 

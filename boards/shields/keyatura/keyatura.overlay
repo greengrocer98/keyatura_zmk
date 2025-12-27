@@ -7,7 +7,7 @@
         zmk,kscan = &kscan0;
         zmk,backlight = &backlight;
         // zmk,matrix_transform = &default_transform;
-        // zmk,physical-layout = &physical_layout0;
+        zmk,physical-layout = &physical_layout0;
     }; 
 
     default_transform: keymap_transform0 {
@@ -39,12 +39,12 @@
             ;
 
         col-gpios
-		= <&gpio0 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-		, <&gpio0 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-		, <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-		, <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-		, <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        ;
+            = <&gpio0 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
 
     };
 
