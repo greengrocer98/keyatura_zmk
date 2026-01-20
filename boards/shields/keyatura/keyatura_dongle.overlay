@@ -61,32 +61,32 @@
 	};
 };
 
-
-
 &mouse_listener {
 	status = "okay";
+
+	sniper {
+		layers = <1 2>;
+		input-processors = <&zip_xy_scaler 1 4>;
+		process-next;
+	};
 	
 	scroll-scaler {
 		layers = <1>;
-		input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &zip_xy_scaler 1 5 &zip_xy_swap_to_scroll_mapper>;
+		input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &zip_xy_swap_to_scroll_mapper &zip_scroll_scaler 1 8>;
 	};
 	
-	sniper {
-		layers = <2>;
-		input-processors = <&zip_xy_scaler 1 4>;
-	};
 };
 
-// /{
-// 	dpi_cycle: dpi_cycle {
-// 		compatible = "zmk,behavior-sensor-attr-cycle";
-// 		#binding-cells = <1>;
-// 		values = < 400 800 1200 2400 3200 >;
-// 		attr = <0>;
-// 		sensor_device = <&mouse_split>;
-// 		display-name = "DPI cycle";
-// 		load_delay = <200>;
-// 		save_delay = <1000>;
-// 		persistant;
-// 	};
-// };
+/ {
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		#binding-cells = <1>;
+		values = < 600 1200 2400 3200 >;
+		attr = <0>;
+		sensor_device = <&mouse_split>;
+		display-name = "DPI cycle";
+        load_delay = <200>;
+        save_delay = <1000>;
+		persistant;
+	};
+};

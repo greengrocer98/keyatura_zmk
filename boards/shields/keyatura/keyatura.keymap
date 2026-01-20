@@ -9,7 +9,10 @@
 #define U_TAPPING_TERM 220
 #define U_QUICK_TAP 200
 
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 50 
+#ifdef ZMK_POINTING_DEFAULT_SCRL_VAL
+    #undef ZMK_POINTING_DEFAULT_SCRL_VAL 
+    #define ZMK_POINTING_DEFAULT_SCRL_VAL 50 
+#endif
 
 / {
     combos {
@@ -17,7 +20,7 @@
 
         Reset {
             bindings = <&sys_reset>;
-            key-positions = <11 12>;
+            key-positions = <16 17>;
         };
 
         ParaLeft {
@@ -59,7 +62,7 @@
             bindings = <&kp LEFT_ALT>;
             key-positions = <12 13>;
         };
-        
+
         lang {
             bindings = <&kp LS(LALT)>;
             key-positions = <7 8>;
@@ -101,15 +104,15 @@
             trigger-period-ms = <3>;
             x-input-code = <INPUT_REL_HWHEEL>;
             y-input-code = <INPUT_REL_WHEEL>;
-            time-to-max-speed-ms = <200>;
-            acceleration-exponent = <1>;
+            time-to-max-speed-ms = <0>;
+            acceleration-exponent = <0>;
         };
 
         rot_enc: sensor_rotate {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&ec_s MOVE_Y(-195)>, <&ec_s MOVE_Y(195)>;
-            tap-ms = <65>;
+            bindings = <&ec_s MOVE_Y(-150)>, <&ec_s MOVE_Y(150)>;
+            tap-ms = <15>;
         };
     };
 
@@ -123,7 +126,7 @@
 &kp Z  &kp X              &kp C              &kp V                     &kp B         &kp N      &kp M                  &kp COMMA  &kp DOT  &kp FSLH
               &u_mt LCTRL ENTER  &u_mt LSHFT SPACE  &u_mt LEFT_WIN BACKSPACE         &u_lt 2 DELETE  &u_lt 1 TAB  &u_mt LEFT_ALT ESCAPE
                                                             &mkp MB1 &mkp MB2 &mkp MB3
-                                                        &u_lt_mouse 1 MB5  &u_lt_mouse 2 MB4
+                                                        &u_lt_mouse 1 MB5  &u_lt_mouse 2 MB4 &dpi_cycle(1)
           >;
         sensor-bindings = <&rot_enc>;
         };
@@ -135,7 +138,7 @@
 &kp PLUS  &kp ASTERISK       &kp EQUAL          &kp MINUS             &kp DOT  &kp HOME          &kp PAGE_DOWN      &kp PG_UP        &kp END          &kp BACKSLASH
           &u_mt LCTRL ENTER  &u_mt LSHFT SPACE  &u_mt LALT BACKSPACE           &trans   &trans            &trans
                                                       &kp LC(LA(TAB))  &kp LC(LS(LA(TAB))) &trans
-                                                               &trans   &u_lt_mouse 2 MB4
+                                                               &trans   &u_lt_mouse 2 MB4 &dpi_cycle(1)
           >;
         sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
@@ -147,7 +150,7 @@
 &kp F11  &kp F12  &kp F13  &kp F14  &kp F15       &kp ASTERISK    &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PERCENT  &bt BT_CLR
          &kp LCTRL  &kp LEFT_SHIFT  &kp LEFT_ALT  &trans          &trans                &trans
                                                             &check_bat  &check_conn  &mkp MB3
-                                                        &u_lt_mouse 1 MB5  &u_lt_mouse 2 MB4
+                                                        &u_lt_mouse 1 MB5  &u_lt_mouse 2 MB4 &trans
           >;
         sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };

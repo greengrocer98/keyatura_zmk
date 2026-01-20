@@ -6,8 +6,6 @@ manifest:
       url-base: https://github.com/greengrocer98
     - name: badjeff
       url-base: https://github.com/badjeff
-    - name: efogdev
-      url-base: https://github.com/efogdev
     - name: nrfconnect
       url-base: https://github.com/nrfconnect
   projects:
@@ -16,7 +14,7 @@ manifest:
       revision: main
       import: app/west.yml
     - name: zmk-paw3395-driver
-      remote: badjeff
+      remote: ggrocer
       revision: main
     - name: zmk-feature-split-esb
       remote: badjeff

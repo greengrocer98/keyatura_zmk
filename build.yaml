@@ -15,5 +15,5 @@
 include:
   - board: nice_nano
     shield: keyatura_dongle
-  - board: nice_nano
+  - board: lariska
     shield: keyatura_mouse

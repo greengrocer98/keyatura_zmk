@@ -1,0 +1,5 @@
+board:
+  name: lariska
+  vendor: vgn
+  socs:
+    - name: nrf52840

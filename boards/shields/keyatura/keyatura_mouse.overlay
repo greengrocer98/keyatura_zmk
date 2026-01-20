@@ -21,18 +21,10 @@
 
 / {
 	chosen {
-		zmk,battery = &vbatt;
 		zmk,kscan = &kscan2;
 		// zmk,physical-layout = &physical_layout0;
 		zmk,matrix_transform = &default_transform;
 		zmk,backlight = &backlight;
-	};
-	
-	vbatt: vbatt {
-		compatible = "zmk,battery-voltage-divider";
-		io-channels = <&adc 7>;
-		output-ohms = <400000>;
-		full-ohms = <(1000000 + 400000)>;
 	};
 	
 	kscan2: kscan_direct {
@@ -44,6 +36,7 @@
 		, <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
 		, <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
 		, <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+		, <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
 		;
 	};
 };
@@ -51,7 +44,6 @@
 &default_transform {
 	row-offset = <8>;
 };
-
 
 &pinctrl {
 	spi2_default: spi2_default {
@@ -90,8 +82,7 @@
 		
 		// paw3395 driver parameters
 		irq-gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-		cpi-gpios = <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-		cpi = <600 1200 2400 3200>;
+		cpi = <1200>;
 		// swap-xy; /* optional */
 		invert-x; /* optional */
 		// invert-y; /* optional */
@@ -104,12 +95,6 @@
 &mouse_split {
 	device = <&mou0>;
 };
-
-// &m_encoder {
-//     status = "okay";
-//     a-gpios = <&gpio0 1 (GPIO_ACTIVE_LOW)>;
-//     b-gpios = <&gpio0 0 (GPIO_ACTIVE_LOW)>;
-// };
 
 / {
 	/delete-node/ m_encoder;
@@ -146,16 +131,16 @@ m_encoder: &qdec0 {
 	pinctrl-names = "default", "sleep";
 };
 
-// /{
-// 	dpi_cycle: dpi_cycle {
-// 		compatible = "zmk,behavior-sensor-attr-cycle";
-// 		#binding-cells = <1>;
-// 		values = < 400 800 1200 2400 3200 >;
-// 		attr = <0>;
-// 		sensor_device = <&mou0>;
-// 		display-name = "DPI cycle";
-// 		load_delay = <200>;
-// 		save_delay = <1000>;
-// 		persistant;
-// 	};
-// };
+/ {
+	dpi_cycle: dpi_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		#binding-cells = <1>;
+		values = < 600 1200 2400 3200 >;
+		attr = <0>;
+		sensor_device = <&mou0>;
+		display-name = "DPI cycle";
+		load_delay = <200>;
+		save_delay = <1000>;
+		persistant;
+	};
+};
