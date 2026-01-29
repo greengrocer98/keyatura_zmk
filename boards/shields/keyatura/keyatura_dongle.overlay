@@ -85,8 +85,14 @@
 		attr = <0>;
 		sensor_device = <&mouse_split>;
 		display-name = "DPI cycle";
-        load_delay = <200>;
-        save_delay = <1000>;
-		persistant;
+	};
+
+	power_cycle: power_cycle {
+		compatible = "zmk,behavior-sensor-attr-cycle";
+		#binding-cells = <1>;
+		values = < 0 1 2 >;
+		attr = <1>;
+		sensor_device = <&mouse_split>;
+		display-name = "power mode cycle";
 	};
 };
