@@ -31,7 +31,7 @@ build () {
     local shield=keyatura
     rm -rf $CURRENT_DIR/build/$shield
     # export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-rgbled-widget"
-    export ZMK_RGBLED_WIDGET="$HOME/zmk-vfx-indicator"
+    export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-vfx-rgbled-indicator"
     export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET}"
     west build \
         -p -b nice_nano \
@@ -60,7 +60,7 @@ build_reset () {
 
 CURRENT_DIR="$(pwd)"
 
-DEFAULTZMKAPPDIR="$HOME/zmk/"
+DEFAULTZMKAPPDIR="$HOME/zmk_new/"
 ZMK_APP_DIR="$DEFAULTZMKAPPDIR/app"
 
 cd $DEFAULTZMKAPPDIR && source .venv/bin/activate && cd -
