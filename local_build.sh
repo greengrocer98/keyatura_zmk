@@ -34,7 +34,7 @@ build () {
     export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-vfx-indicator"
     export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET}"
     west build \
-        -p -b nice_nano \
+        -p -b nice_nano_v2 \
         -S studio-rpc-usb-uart \
         -d "$CURRENT_DIR/build/$shield" -- \
         -DZMK_CONFIG="$CURRENT_DIR" \
@@ -60,7 +60,7 @@ build_reset () {
 
 CURRENT_DIR="$(pwd)"
 
-DEFAULTZMKAPPDIR="$HOME/zmk_new/"
+DEFAULTZMKAPPDIR="$HOME/zmk/"
 ZMK_APP_DIR="$DEFAULTZMKAPPDIR/app"
 
 cd $DEFAULTZMKAPPDIR && source .venv/bin/activate && cd -
