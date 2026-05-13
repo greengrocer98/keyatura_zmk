@@ -32,12 +32,13 @@ build () {
     rm -rf $CURRENT_DIR/build/$shield
     # export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-rgbled-widget"
     export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-vfx-indicator"
-    export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET}"
+    export ZMK_ROOT_MODULE="$HOME/zmk_modules/zmk-vfx-indicator"
+    export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET};${CURRENT_DIR}"
     west build \
         -p -b nice_nano_v2 \
         -S studio-rpc-usb-uart \
         -d "$CURRENT_DIR/build/$shield" -- \
-        -DZMK_CONFIG="$CURRENT_DIR" \
+        -DZMK_CONFIG="$CURRENT_DIR/config" \
         -DSHIELD=$shield \
         -DZMK_EXTRA_MODULES="${ZMK_MODULE_DIRS}" \
         -DCONFIG_ZMK_STUDIO=y
