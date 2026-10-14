@@ -30,13 +30,13 @@ build_mouse () {
 build () {
     local shield=keyatura
     rm -rf $CURRENT_DIR/build/$shield
-    # export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-rgbled-widget"
     export ZMK_RGBLED_WIDGET="$HOME/zmk_modules/zmk-vfx-indicator"
-    export ZMK_ROOT_MODULE="$HOME/zmk_modules/zmk-vfx-indicator"
-    export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET};${CURRENT_DIR}"
+    export ZMK_DRIVER_AZOTEQ="$HOME/zmk_modules/zmk-driver-azoteq-iqs5xx"
+    export ZMK_MODULE_DIRS="${ZMK_RGBLED_WIDGET};${ZMK_DRIVER_AZOTEQ};${CURRENT_DIR}"
     west build \
         -p -b nice_nano_v2 \
         -S studio-rpc-usb-uart \
+        -S zmk-usb-logging \
         -d "$CURRENT_DIR/build/$shield" -- \
         -DZMK_CONFIG="$CURRENT_DIR/config" \
         -DSHIELD=$shield \

@@ -42,11 +42,60 @@
         col-gpios
             = <&gpio0 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio0 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
+    };
+    
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+    };
+};
 
+
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            bias-pull-up;
+        };
     };
 
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+
+&i2c0 {
+    status = "okay";
+    tps43: iqs5xx@74 {
+        status = "okay";
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+
+        one-finger-tap;
+        press-and-hold;
+        press-and-hold-time = <250>;
+        two-finger-tap;
+
+        scroll;
+        natural-scroll-y;
+        natural-scroll-x;
+
+        bottom-beta = <5>;
+        stationary-threshold = <5>;
+
+        switch-xy;
+
+        reset-gpios = <&gpio1 0 GPIO_ACTIVE_LOW>; /* P1.10 */
+        rdy-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>; /* P1.11 */
+    };
 };
