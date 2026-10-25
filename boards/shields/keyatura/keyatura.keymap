@@ -10,8 +10,8 @@
 #define U_QUICK_TAP 200
 
 #ifdef ZMK_POINTING_DEFAULT_SCRL_VAL
-    #undef ZMK_POINTING_DEFAULT_SCRL_VAL 
-    #define ZMK_POINTING_DEFAULT_SCRL_VAL 50 
+    #undef ZMK_POINTING_DEFAULT_SCRL_VAL
+    #define ZMK_POINTING_DEFAULT_SCRL_VAL 50
 #endif
 
 / {
@@ -153,6 +153,42 @@
                                                         &u_lt_mouse 1 MB5  &u_lt_mouse 2 MB4 &trans
           >;
         sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        GAME {
+            bindings = <
+&none   &none   &kp W   &none   &none   &none   &none   &none   &none   &none
+&none   &kp A   &kp S   &kp D   &none   &none   &none   &none   &none   &none
+&none   &none   &none   &none   &none   &none   &none   &none   &none   &none
+                &none   &none   &none   &none   &none   &none
+                &mkp MB1  &mkp MB2  &mkp MB3
+                &u_lt_mouse 4 MB5  &u_lt_mouse 5 MB4 &none
+          >;
+        sensor-bindings = <&rot_enc>;
+        };
+
+        GAME_2 {
+            bindings = <
+&none   &none   &kp W   &none   &none   &none   &none   &none   &none   &none
+&none   &kp A   &kp S   &kp D   &none   &none   &none   &none   &none   &none
+&none   &none   &none   &none   &none   &none   &none   &none   &none   &none
+                &none   &none   &none   &none   &none   &none
+                &mkp MB1  &mkp MB2  &mkp MB3
+                &none   &none   &none
+          >;
+        sensor-bindings = <&rot_enc>;
+        };
+
+        GAME_3 {
+            bindings = <
+&none   &none   &kp W   &none   &none   &none   &none   &none   &none   &none
+&none   &kp A   &kp S   &kp D   &none   &none   &none   &none   &none   &none
+&none   &none   &none   &none   &none   &none   &none   &none   &none   &none
+                &none   &none   &none   &none   &none   &none
+                &mkp MB1  &mkp MB2  &mkp MB3
+                &none   &none   &none
+          >;
+        sensor-bindings = <&rot_enc>;
         };
     };
 
